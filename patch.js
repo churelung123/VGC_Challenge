@@ -17,7 +17,7 @@ code = code.replace(
 code += `
 async function handleAddRyucoin(interaction: DiscordInteraction): Promise<void> {
   const actor = actorUser(interaction);
-  if (actor.id !== '983625547076739102') {
+  if (actor.id !== '873563860991365141') {
     await reply(interaction, { content: '🚫 Bạn không có quyền thần thánh này!', flags: 64 });
     return;
   }

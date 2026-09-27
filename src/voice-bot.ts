@@ -15,7 +15,7 @@ if (process.env.DISCORD_TOKEN === '[SENSITIVE]') {
 }
 
 const token = process.env.DISCORD_TOKEN;
-const ADMIN_USER_ID = process.env.ADMIN_USER_ID || '983625547076739102';
+const ADMIN_USER_ID = process.env.ADMIN_USER_ID || '873563860991365141';
 
 if (!token) {
   console.error('Thiếu DISCORD_TOKEN trong file .env');

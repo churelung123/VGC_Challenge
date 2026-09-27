@@ -15,7 +15,7 @@ import type {
 // All revenue (shop, bet house edge, transfer tax) flows to the main server's bank
 export const MAIN_GUILD_ID = '1520999265466450090';
 // Only this user can run /ladder setup and server admin config commands
-export const SUPER_ADMIN_ID = '983625547076739102';
+export const SUPER_ADMIN_ID = '873563860991365141';
 
 type Sql = NeonQueryFunction<false, false>;
 type DbRow = Record<string, unknown>;
@@ -1517,7 +1517,7 @@ export async function leaderboard(guildId: string, limit = 10, offset = 0): Prom
     FROM ryusei_global_ratings r
     INNER JOIN ryusei_server_members sm ON sm.user_id = r.user_id AND sm.guild_id = $1
     WHERE (r.wins + r.losses + r.draws) > 0
-      AND r.user_id != '983625547076739102'
+      AND r.user_id != '873563860991365141'
     ORDER BY r.rating DESC, r.wins DESC, r.losses ASC
     LIMIT $2 OFFSET $3`,
     [guildId, limit, offset]
@@ -1542,7 +1542,7 @@ export async function globalLeaderboard(limit = 10, offset = 0): Promise<RatingR
       )) AS fallback_name
     FROM ryusei_global_ratings r
     WHERE (r.wins + r.losses + r.draws) > 0
-      AND r.user_id != '983625547076739102'
+      AND r.user_id != '873563860991365141'
     ORDER BY r.rating DESC, r.wins DESC, r.losses ASC
     LIMIT $1 OFFSET $2`,
     [limit, offset]
@@ -1562,7 +1562,7 @@ export async function leaderboardCount(guildId: string): Promise<number> {
     FROM ryusei_global_ratings r
     INNER JOIN ryusei_server_members sm ON sm.user_id = r.user_id AND sm.guild_id = $1
     WHERE (r.wins + r.losses + r.draws) > 0
-      AND r.user_id != '983625547076739102'`,
+      AND r.user_id != '873563860991365141'`,
     [guildId]
   );
   return row ? Number(row.total) : 0;
@@ -1574,13 +1574,13 @@ export async function globalLeaderboardCount(): Promise<number> {
     SELECT COUNT(*)::int as total
     FROM ryusei_global_ratings r
     WHERE (r.wins + r.losses + r.draws) > 0
-      AND r.user_id != '983625547076739102'`
+      AND r.user_id != '873563860991365141'`
   );
   return row ? Number(row.total) : 0;
 }
 
 export async function rankPosition(guildId: string, userId: string): Promise<number | undefined> {
-  if (userId === '983625547076739102') return undefined;
+  if (userId === '873563860991365141') return undefined;
   const rating = await getRating(guildId, userId);
   if (!rating.matches) return undefined;
   const [row] = await query(
@@ -1590,7 +1590,7 @@ export async function rankPosition(guildId: string, userId: string): Promise<num
        FROM ryusei_global_ratings r
        INNER JOIN ryusei_server_members sm ON sm.user_id = r.user_id AND sm.guild_id = $1
        WHERE (r.wins + r.losses + r.draws) > 0
-         AND r.user_id != '983625547076739102'
+         AND r.user_id != '873563860991365141'
      )
      SELECT position::int FROM raw_ranked WHERE user_id = $2`,
     [guildId, userId]
@@ -2563,7 +2563,7 @@ export async function withdrawFromBank(input: {
 
   const isSuperAdmin =
     input.executorId === SUPER_ADMIN_ID ||
-    input.executorId === '983625547076739102' ||
+    input.executorId === '873563860991365141' ||
     (process.env.SUPER_ADMIN_ID && input.executorId === process.env.SUPER_ADMIN_ID) ||
     (process.env.ADMIN_USER_ID && input.executorId === process.env.ADMIN_USER_ID);
 

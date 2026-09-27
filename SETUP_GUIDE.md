@@ -57,7 +57,7 @@ Bot cần các quyền tối thiểu:
 
 ---
 
-## ⚙️ Bước 2: Cấu Hình Ladder (Chỉ Super Admin 983625547076739102 Chạy Setup)
+## ⚙️ Bước 2: Cấu Hình Ladder (Chỉ Super Admin 873563860991365141 Chạy Setup)
 
 ### 2.1. Thiết lập Mod Role Cho Partner Server
 

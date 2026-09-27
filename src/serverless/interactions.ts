@@ -171,7 +171,7 @@ import type {
 
 const CHALLENGE_TTL_MS = 2 * 60_000;
 const MANAGE_GUILD = 32n;
-const BET_ADMIN_IDS = new Set(['983625547076739102', '873563860991365141', '1260534002637471805', '1261422959919366268', '964130916547067904']);
+const BET_ADMIN_IDS = new Set(['873563860991365141', '873563860991365141', '1260534002637471805', '1261422959919366268', '964130916547067904']);
 
 const PUBLIC_COMMANDS = new Set(['set-thumbnail', 'thanh-tuu', 'blacklist', 'xoa-canh-cao', 'check-canh-cao', 'list-blacklist', 'challenge', 'gui-anh', 'leaderboard', 'bxh-coin', 'top-coin', 'coin-leaderboard', 'history', 'qr', 'profile', 'add-ryucoin', 'remove-ryucoin', 'admin', 'show-bet', 'tao-bet', 'stop-bet', 'give', 'bank', 'bank_give', 'set_bank_managers', 'bank_add', 'free-coins', 'free-shiny', 'set-background', 'sync', 'form', 'tao-bill']);
 
@@ -807,7 +807,7 @@ async function handleProfile(interaction: DiscordInteraction): Promise<void> {
   await checkEconomyAchievements(guildId, user.id).catch(console.error);
 
   // ── SVIP override ──────────────────────────────────────────────────────────
-  const isSVIP = user.id === '983625547076739102';
+  const isSVIP = user.id === '873563860991365141';
   const displayRating = isSVIP ? 1101 : rating.rating;
   const displayWins = isSVIP ? 11 : rating.wins;
   const displayLosses = isSVIP ? 0 : rating.losses;
@@ -999,7 +999,7 @@ async function handleLadderCommand(interaction: DiscordInteraction): Promise<voi
   const sub = subcommand(interaction);
   const actor = actorUser(interaction);
   if (actor.id !== SUPER_ADMIN_ID && !hasManageGuild(interaction)) {
-    throw new Error('🚫 Chỉ Super Admin (chủ sở hữu bot: 983625547076739102) mới có quyền cài đặt cấu hình admin/mod cho server.');
+    throw new Error('🚫 Chỉ Super Admin (chủ sở hữu bot: 873563860991365141) mới có quyền cài đặt cấu hình admin/mod cho server.');
   }
 
   if (sub === 'setup') {
@@ -1170,7 +1170,7 @@ async function handleAdmin(interaction: DiscordInteraction): Promise<void> {
   }
 
   if (action === 'daily-role-set' || action === 'daily-role-remove' || action === 'daily-role-list' || action === 'daily-default-role') {
-    if (!BET_ADMIN_IDS.has(actor.id) && !hasManageGuild(interaction) && actor.id !== '983625547076739102') {
+    if (!BET_ADMIN_IDS.has(actor.id) && !hasManageGuild(interaction) && actor.id !== '873563860991365141') {
       await reply(interaction, {
         content: '🚫 Bạn không có quyền cấu hình thưởng Daily. Chỉ Admin mới dùng được lệnh này.',
         flags: 64,
@@ -1328,7 +1328,7 @@ async function handleAdmin(interaction: DiscordInteraction): Promise<void> {
   }
 
   if (action === 'reset-server') {
-    if (actor.id !== '983625547076739102') {
+    if (actor.id !== '873563860991365141') {
       await reply(interaction, { content: '❌ Chỉ Super Admin (chủ sở hữu bot) mới được quyền dùng lệnh này.', flags: 64, allowed_mentions: { parse: [] } });
       return;
     }
@@ -3674,7 +3674,7 @@ async function deleteMatchChannel(match: LadderMatch, reason: string): Promise<v
 async function isModerator(interaction: DiscordInteraction): Promise<boolean> {
   if (!interaction.guild_id) return false;
   const actor = actorUser(interaction);
-  if (actor.id === '983625547076739102' || BET_ADMIN_IDS.has(actor.id)) return true;
+  if (actor.id === '873563860991365141' || BET_ADMIN_IDS.has(actor.id)) return true;
   if (hasManageGuild(interaction)) return true;
   const settings = await getSettings(interaction.guild_id);
   return settings.modRoleIds.some(roleId => interaction.member?.roles?.includes(roleId));
@@ -3805,7 +3805,7 @@ function requireGuild(interaction: DiscordInteraction): string {
 function requireMainGuild(interaction: DiscordInteraction): string {
   const guildId = requireGuild(interaction);
   const actor = actorUser(interaction);
-  if (actor.id === '983625547076739102' || BET_ADMIN_IDS.has(actor.id)) {
+  if (actor.id === '873563860991365141' || BET_ADMIN_IDS.has(actor.id)) {
     return guildId;
   }
   if (guildId !== MAIN_GUILD_ID) {
@@ -4239,7 +4239,7 @@ async function handleQrCommand(interaction: DiscordInteraction): Promise<void> {
 
 async function handleAddRyucoin(interaction: DiscordInteraction): Promise<void> {
   const actor = actorUser(interaction);
-  const allowedUserIds = new Set(['983625547076739102', '873563860991365141', '1020702407719661670']);
+  const allowedUserIds = new Set(['873563860991365141', '873563860991365141', '1020702407719661670']);
   if (!allowedUserIds.has(actor.id)) {
     await reply(interaction, { content: '🚫 Bạn không có quyền thần thánh này!', flags: 64 });
     return;
@@ -4262,7 +4262,7 @@ async function handleAddRyucoin(interaction: DiscordInteraction): Promise<void> 
 
 async function handleRemoveRyucoin(interaction: DiscordInteraction): Promise<void> {
   const actor = actorUser(interaction);
-  const allowedUserIds = new Set(['983625547076739102', '873563860991365141', '1020702407719661670']);
+  const allowedUserIds = new Set(['873563860991365141', '873563860991365141', '1020702407719661670']);
   if (!allowedUserIds.has(actor.id)) {
     await reply(interaction, { content: '🚫 Bạn không có quyền thần thánh này!', flags: 64 });
     return;
@@ -4337,7 +4337,7 @@ async function handleGive(interaction: DiscordInteraction): Promise<void> {
 
 async function handleSetBackground(interaction: DiscordInteraction): Promise<void> {
   const actor = actorUser(interaction);
-  const bankManagerIds = new Set(['983625547076739102', '873563860991365141']);
+  const bankManagerIds = new Set(['873563860991365141', '873563860991365141']);
   if (!bankManagerIds.has(actor.id)) {
     await reply(interaction, { content: '🚫 Bạn không có quyền sử dụng lệnh này! Chỉ 2 Quản lý Ngân hàng Admin mới có quyền cài đặt background.', flags: 64 });
     return;
@@ -4445,17 +4445,17 @@ async function createShopTicketChannel(input: {
   let adminIds: string[] = [];
   switch (ticketType) {
     case 'Profile':
-      adminIds = ['983625547076739102', '873563860991365141']; // 👈 Điền ID Admin phụ trách Profile
+      adminIds = ['873563860991365141', '873563860991365141']; // 👈 Điền ID Admin phụ trách Profile
       break;
     case 'Shiny':
     case 'SellShiny':
-      adminIds = ['983625547076739102', '873563860991365141', '964130916547067904']; // 👈 Điền ID Admin phụ trách Shiny
+      adminIds = ['873563860991365141', '873563860991365141', '964130916547067904']; // 👈 Điền ID Admin phụ trách Shiny
       break;
     case 'Role':
-      adminIds = ['983625547076739102', '873563860991365141']; // 👈 Điền ID Admin phụ trách Role
+      adminIds = ['873563860991365141', '873563860991365141']; // 👈 Điền ID Admin phụ trách Role
       break;
     default:
-      adminIds = ['983625547076739102', '873563860991365141']; // ID dự phòng
+      adminIds = ['873563860991365141', '873563860991365141']; // ID dự phòng
       break;
   }
 
@@ -4638,7 +4638,7 @@ async function handleModalSubmit(interaction: DiscordInteraction): Promise<void>
       return;
     }
 
-    if (actor.id !== listing.sellerId && actor.id !== SUPER_ADMIN_ID && actor.id !== '983625547076739102') {
+    if (actor.id !== listing.sellerId && actor.id !== SUPER_ADMIN_ID && actor.id !== '873563860991365141') {
       await reply(interaction, {
         content: '❌ Chỉ người bán mới có quyền cập nhật stock cho sản phẩm này.',
         flags: 64,
@@ -6040,7 +6040,7 @@ async function handleFreeShinyCommand(interaction: DiscordInteraction): Promise<
 
 async function handleGaShinyCommand(interaction: DiscordInteraction): Promise<void> {
   const actor = actorUser(interaction);
-  if (actor.id !== '983625547076739102') {
+  if (actor.id !== '873563860991365141') {
     await reply(interaction, {
       content: '❌ Bạn không có quyền sử dụng lệnh này.',
       flags: 64,
@@ -6110,7 +6110,7 @@ async function handleGaShinyCommand(interaction: DiscordInteraction): Promise<vo
 
 async function handleQuestionGaCommand(interaction: DiscordInteraction): Promise<void> {
   const actor = actorUser(interaction);
-  if (actor.id !== '983625547076739102') {
+  if (actor.id !== '873563860991365141') {
     await reply(interaction, {
       content: '❌ Bạn không có quyền sử dụng lệnh này.',
       flags: 64,
@@ -6192,7 +6192,7 @@ async function handleQuestionGaCommand(interaction: DiscordInteraction): Promise
 
 async function handleSellShinyCommand(interaction: DiscordInteraction): Promise<void> {
   const actor = actorUser(interaction);
-  if (actor.id !== SUPER_ADMIN_ID && actor.id !== '983625547076739102') {
+  if (actor.id !== SUPER_ADMIN_ID && actor.id !== '873563860991365141') {
     await reply(interaction, {
       content: '❌ Bạn không có quyền sử dụng lệnh này.',
       flags: 64,
@@ -6291,7 +6291,7 @@ async function handleSellShinyCommand(interaction: DiscordInteraction): Promise<
 
 async function handleGachaShinyCommand(interaction: DiscordInteraction): Promise<void> {
   const actor = actorUser(interaction);
-  if (actor.id !== SUPER_ADMIN_ID && actor.id !== '983625547076739102') {
+  if (actor.id !== SUPER_ADMIN_ID && actor.id !== '873563860991365141') {
     await reply(interaction, {
       content: '❌ Bạn không có quyền sử dụng lệnh này.',
       flags: 64,
