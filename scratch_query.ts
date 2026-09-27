@@ -4,14 +4,14 @@ async function run() {
   try {
     await ensureSchema();
     console.log("Schema ensured.");
-    const match = await joinQueue("test-guild", "test-user-1", "Test User 1");
+    const match = await joinQueue("test-guild", "test-user-1", "Test User 1", "test-channel");
     console.log("Join 1:", match);
-    const match2 = await joinQueue("test-guild", "test-user-2", "Test User 2");
+    const match2 = await joinQueue("test-guild", "test-user-2", "Test User 2", "test-channel");
     console.log("Join 2:", match2);
     await leaveQueue("test-guild", "test-user-1");
     await leaveQueue("test-guild", "test-user-2");
     console.log("Done");
-  } catch(e) {
+  } catch (e) {
     console.error("Error testing:", e);
   }
 }
