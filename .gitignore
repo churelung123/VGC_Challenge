@@ -1,0 +1,14 @@
+node_modules/
+.next/
+dist/
+.env
+data/*.sqlite
+data/*.sqlite-*
+data/backup_neon.*
+/team-builder/
+/vendor/
+*.log
+*.tsbuildinfo
+.DS_Store
+.vercel
+.env*

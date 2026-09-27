@@ -1,0 +1,11 @@
+.env
+.git
+node_modules
+dist
+data
+tests
+team-builder
+vendor
+*.log
+*.zip
+.DS_Store
