@@ -39,7 +39,7 @@
     "tests/**/*.ts",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
-  ],
+, "src/deploy-commands.ts"  ],
   "exclude": [
     "node_modules",
     "vendor",
