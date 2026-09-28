@@ -18,6 +18,7 @@ async function main(): Promise<void> {
     if (config.guildId) {
       await rest.put(Routes.applicationGuildCommands(config.clientId, config.guildId), {body: []});
       console.log(`Cleared guild commands from ${config.guildId}.`);
+      
     }
   }
 }
